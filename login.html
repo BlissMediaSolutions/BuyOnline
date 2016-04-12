@@ -1,0 +1,98 @@
+<!--  	Student ID: 1060325
+		Student Name: Danielle Walker
+		Subject: COS30020 - Web Application Development
+		Assignment - Assignment 2
+		
+		File: login.html - The Customer Login page which a customer uses to login into BuyOnline.
+-->
+
+<!DOCTYPE html >
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<m<meta name="Keywords" content="Buy Online"/>
+<meta name="Description" content="Buy Online" />
+<meta name="Author" content="Danielle Walker" />
+<title>Buy Online - Customer Login</title>
+
+<link href="styles.css" rel = "stylesheet" type="text/css" />
+<link href="Smooth_menu.css" rel="stylesheet" type="text/css" />
+
+<script src="jscookies.js" type="text/javascript"></script>
+
+</head>
+
+<script type="text/javascript">
+	
+	function CustLogin(){
+		
+		/*get values from Customer Login Form */
+		var emailadd = document.getElementById("emailadd").value;
+		var custpass = document.getElementById("custpass").value;
+				
+		//User AJAX to pass the values from the login to the PHP file for handling.
+		var xHRObject = false;
+			if (window.XMLHttpRequest) xHRObject = new XMLHttpRequest();
+			else if (window.ActiveXObject) xHRObject = new ActiveXObject("Microsoft.XMLHTTP");
+			
+			xHRObject.open("GET", "login.php?id=" +  Number(new Date) + "&emailadd=" + emailadd + "&custpass=" + custpass, true);
+			xHRObject.onreadystatechange = function() {
+				if (xHRObject.readyState == 4 && xHRObject.status == 200) {
+					AjaxResult = xHRObject.responseText;
+					var res = AjaxResult.split(",");
+					
+					//The Email Address & Password were both found in the XML file
+					if (res[0] == "Success") {
+						setCookie("username", res[1], 30);
+						window.location.href = "buying.html";
+					
+					//Either the Email Address or Password are Incorrect
+					} else {
+						document.getElementById('queryresult').innerHTML = AjaxResult;
+						document.getElementById('emailadd').value = "";
+						document.getElementById('custpass').value = "";
+					}
+				}
+			}
+			xHRObject.send(null);
+	}
+		
+</script>
+
+<body id="home">
+
+<div id="header_wrapper">
+    <div id="header">
+	    <div id="site_title"></div>
+			<div id="Main_menu" class="smooth_menu">	
+				<ul>
+					<li><a href="buyonline.html">BuyOnline</a></li>
+					<li><a href="register.html">Registration</a></li>
+					<li><a href="login.html">Login</a></li> 
+					<li><a href="mlogin.html">Store-Login</a></li>
+				</ul>
+			<br style="clear: left" />
+        </div> 
+	</div> 
+</div>
+	
+<div id="main_layout">	
+    <div class="main_text float_1">
+		<fieldset id="manlogin">
+			<legend>Customer Login</legend>
+			<label for="emailadd">Email:</label> <input type="email" id="emailadd" name="emailadd" maxlength="30" required="required"/>
+           	<div class="cleaner h10"></div>
+			<label for="custpass">Password:</label> <input type="password" id="custpass" name="custpass" maxlength="10" required="required"/>
+			<div class="cleaner h10"></div>
+			<br /> 
+			<button onclick="CustLogin()" class="submit_btn float_l">Login</button>
+		</fieldset>
+	<br />
+	<span id="queryresult"></span>
+	</p>
+	</div>
+</div>
+ 
+
+</body>
+</html>

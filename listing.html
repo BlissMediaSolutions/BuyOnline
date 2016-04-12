@@ -1,0 +1,135 @@
+<!--  	Student ID: 1060325
+		Student Name: Danielle Walker
+		Subject: COS30020 - Web Application Development
+		Assignment - Assignment 2
+		
+		File: register.html - The Item Listing page is used by Managers to add a new Stock Item Listing.
+							The page makes sure the Item Price & Item Quantity are both numeric numbers.
+-->
+
+<!DOCTYPE html >
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<m<meta name="Keywords" content="Buy Online"/>
+<meta name="Description" content="Buy Online" />
+<meta name="Author" content="Danielle Walker" />
+<title>Buy Online - Item Listing</title>
+
+<link href="styles.css" rel = "stylesheet" type="text/css" />
+<link href="Smooth_menu.css" rel="stylesheet" type="text/css" />
+
+<script src="jscookies.js" type="text/javascript"></script>
+
+</head>
+
+<script type="text/javascript">
+	
+	function loaduser()
+	{
+		var CurrUser = document.getElementById("curruser").innerHTML = "Currently Logged On User: " + getCookie("username");
+	}
+	
+	function validateItem(){
+		var errMsg = "";								/* stores the error message */
+		var result = true;								/* assumes no errors */
+		var AjaxResult;
+		
+		/*get values from Item Listing Form */
+		var ItemName = document.getElementById("ItemName").value;
+		var ItemPrice = document.getElementById("ItemPrice").value;
+		var ItemQty = document.getElementById("ItemQty").value;
+		var ItemDesc = document.getElementById("ItemDesc").value;
+						
+		/*Check if the Item Price is Numeric */
+		if (isNaN(ItemPrice)) {
+			errMsg += "Item Price must be numeric.\n";
+			document.getElementById("ItemPrice").value = "";
+			result = false;
+		}
+			
+		/*Check if the Item Qty is Numeric */
+		if (isNaN(ItemQty)) {
+			errMsg += "Item Qty must be numeric";
+			document.getElementById("ItemQty").value = "";
+			result = false;
+		}
+				
+		if (errMsg != ""){   //only display message box if there is something to show
+			alert(errMsg);
+		} 
+	
+		if (result != false) {		//There's no Javascript validation issues so use AJAX to send data to PHP
+			var xHRObject = false;
+			if (window.XMLHttpRequest) xHRObject = new XMLHttpRequest();
+			else if (window.ActiveXObject) xHRObject = new ActiveXObject("Microsoft.XMLHTTP");
+			
+			xHRObject.open("GET", "ListItem.php?id=" +  Number(new Date) + "&ItemName=" + ItemName + "&ItemPrice=" + ItemPrice +
+				"&ItemQty=" + ItemQty + "&ItemDesc=" + ItemDesc, true);
+			xHRObject.onreadystatechange = function() {
+				if (xHRObject.readyState == 4 && xHRObject.status == 200) {
+					AjaxResult = xHRObject.responseText;
+					if (AjaxResult != "Error") {
+						document.getElementById('ajaxresult').innerHTML = xHRObject.responseText;
+					}
+				}
+		}
+			xHRObject.send(null);
+		}
+		//return result;    //if false the information will not be sent to the server
+	}
+	
+	function ResetFields() {
+		document.getElementById("ItemName").value = "";
+		document.getElementById("ItemPrice").value = "";
+		document.getElementById("ItemQty").value = "";
+		document.getElementById("ItemDesc").value = "";
+	}
+
+</script>
+
+<body id="home" onload="loaduser()">
+
+<div id="header_wrapper">
+    <div id="header">
+	    <div id="site_title"></div>
+			<div id="Main_menu" class="smooth_menu">	
+				<ul>
+					<li><a id="menu1" href="logout.html">Logout</a></li>
+					<li><a id="menu2" href=#></a></li>
+					<li><a id="menu3" href="processing.html">Processing</a></li> 
+					<li><a id="menu4" href="listing.html">Listing</a></li> 
+				</ul>
+			<br style="clear: left" />
+        </div> 
+	</div> 
+</div>
+
+<p id = "curruser"></p>	
+	
+<div id="main_layout">	
+    <div class="main_text float_1">
+		<fieldset id="registercust">
+			<legend>Add New Item</legend>
+			<label for="ItemName">Item Name:</label> <input type="text" id="ItemName" name="ItemName" maxlength="30" required="required"/>
+			<div class="cleaner h10"></div>
+			<label for="ItemPrice">Item Price:</label> <input type="text" id="ItemPrice" name="ItemPrice" maxlength="5" required="required"/>
+			<div class="cleaner h10"></div>
+			<label for="ItemQty">Item Quantity:</label> <input type="text" id="ItemQty" name="ItemQty" maxlength="5" required="required"/>
+			<div class="cleaner h10"></div>
+			<label for="ItemDesc">Item Description:</label> <input type="text" id="ItemDesc" name="ItemDesc" maxlength="200" required="required"/>
+			<div class="cleaner h10"></div>
+				
+			<br />
+			<button onclick="validateItem()" class="submit_btn float_l">Add Item</button>
+			<button onclick="ResetFields()" class="submit_btn float_r">Reset</button>
+		</fieldset>
+		<br />
+		<p id="ajaxresult">
+		</p>
+	</div>
+</div>
+ 
+
+</body>
+</html>

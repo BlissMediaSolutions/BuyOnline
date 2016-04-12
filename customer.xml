@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Customers>
+  <Customer>
+    <CustomerID>1001</CustomerID>
+    <FirstName>Danielle</FirstName>
+    <LastName>Walker</LastName>
+    <Email>danielle@gmail.com</Email>
+    <Password>123</Password>
+    <Phone/>
+  </Customer>
+<Customer><CustomerID>1002</CustomerID><FirstName>Michele</FirstName><LastName>Lineham</LastName><Email>michele@hotmail.com</Email><Password>123</Password><Phone>(12) 3456-7890</Phone></Customer><Customer><CustomerID>1003</CustomerID><FirstName>John</FirstName><LastName>Smith</LastName><Email>john@gmail.com</Email><Password>asd</Password><Phone/></Customer><Customer><CustomerID>1004</CustomerID><FirstName>Dianne</FirstName><LastName>Walker</LastName><Email>dianne@yahoo.com</Email><Password>123</Password><Phone>(03) 9525-6878</Phone></Customer></Customers>

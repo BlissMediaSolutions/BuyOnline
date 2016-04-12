@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Items>
+  <Item>
+    <ItemID>50001</ItemID>
+    <ItemName>Samsung Galaxy S3</ItemName>
+    <ItemPrice>399</ItemPrice>
+    <ItemQty>3</ItemQty>
+    <ItemDesc>3G Mobile</ItemDesc>
+    <QtyHold>0</QtyHold>
+    <QtySold>0</QtySold>
+  </Item>
+<Item><ItemID>50002</ItemID><ItemName>Samsung Galaxy S4</ItemName><ItemPrice>549</ItemPrice><ItemQty>7</ItemQty><ItemDesc>4G Mobile</ItemDesc><QtyHold>0</QtyHold><QtySold>0</QtySold></Item><Item><ItemID>50003</ItemID><ItemName>Samsung Galaxy S5</ItemName><ItemPrice>629</ItemPrice><ItemQty>2</ItemQty><ItemDesc>4G Mobile</ItemDesc><QtyHold>0</QtyHold><QtySold>0</QtySold></Item><Item><ItemID>50004</ItemID><ItemName>Kaspersky Anti-Virus</ItemName><ItemPrice>25</ItemPrice><ItemQty>10</ItemQty><ItemDesc>AV Software</ItemDesc><QtyHold>0</QtyHold><QtySold>0</QtySold></Item><Item><ItemID>50005</ItemID><ItemName>Kaspersky Internet Security</ItemName><ItemPrice>35</ItemPrice><ItemQty>13</ItemQty><ItemDesc>AV Software</ItemDesc><QtyHold>0</QtyHold><QtySold>0</QtySold></Item><Item><ItemID>50006</ItemID><ItemName>Kaspersky Total Security</ItemName><ItemPrice>50</ItemPrice><ItemQty>22</ItemQty><ItemDesc>AV Software</ItemDesc><QtyHold>0</QtyHold><QtySold>0</QtySold></Item><Item><ItemID>50007</ItemID><ItemName>Kaspersky Small Office Securit</ItemName><ItemPrice>99.95</ItemPrice><ItemQty>4</ItemQty><ItemDesc>AV Software</ItemDesc><QtyHold>0</QtyHold><QtySold>0</QtySold></Item></Items>

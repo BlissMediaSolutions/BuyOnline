@@ -1,0 +1,157 @@
+<!--  	Student ID: 1060325
+		Student Name: Danielle Walker
+		Subject: COS30020 - Web Application Development
+		Assignment - Assignment 2
+		
+		File: register.html - The Customer Registration page which users need to register on to book a request for a pickup/delivery.
+							The page makes sure the email address entered is unique (not in use), that the 2 passwords entered match & phone number is numeric. 
+-->
+<!DOCTYPE html >
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="Keywords" content="Buy Online"/>
+<meta name="Description" content="Buy Online" />
+<meta name="Author" content="Danielle Walker" />
+<title>Buy Online - Registration</title>
+
+<link href="styles.css" rel = "stylesheet" type="text/css" />
+<link href="Smooth_menu.css" rel="stylesheet" type="text/css" />
+
+<script src="jscookies.js" type="text/javascript"></script>
+
+
+
+<script type="text/javascript">
+	
+	function validateCustomer(){
+		var errMsg = "";								/* stores the error message */
+		var result = true;								/* assumes no errors */
+		var AjaxResult;
+		
+		/*get values from Customer Registration Form */
+		var fname = document.getElementById("fname").value;
+		var lname = document.getElementById("lname").value;
+		var pass1 = document.getElementById("custpass").value;
+		var pass2 = document.getElementById("confpass").value;
+		var emailadd = document.getElementById("custemail").value;
+		var custphone = document.getElementById("custphone").value;
+				
+		/* Check the First & Last Names are only Aplha characters */   
+		if (fname.search(/[^A-Za-z\s]/) != -1) {
+			errMsg += "Not a valid First Name.\n";
+			document.getElementById('fname').value = "";
+			result = false;
+		}
+		if (lname.search(/[^A-Za-z\s]/) != -1) {
+			errMsg += "Not a valid Last Name.\n";
+			document.getElementById('lname').value = "";
+			result = false;
+		}
+			
+		/*Check the 2 passwords match */
+		if (pass1 != pass2) {
+			errMsg += "Passwords do not match.\n";
+			document.getElementById('custpass').value = "";
+			document.getElementById('confpass').value = "";
+			result = false;
+		}
+	
+		/*If the phone number has been entered check that its in the correct format */
+		/*  Valid Phone formats: "12-3456-7890"  OR "(12)3456-7890"  OR "(12) 3456-7890"   */
+		if (custphone != "") {
+			var TestPattern = /^\(?[0-9]{2}(\-|\)) ?[0-9]{4}-[0-9]{4}$/;
+			if (!TestPattern.test(custphone)) {
+				errMsg += "The Phone number must be in the correct format";
+				document.getElementById('custphone').value = "";
+				result = false;
+			}
+		}
+		
+		if (errMsg != ""){   //only display message box if there is something to show
+			alert(errMsg);
+		} 
+	
+		if (result != false) {		//There's no Javascript issues so use AJAX to send data to PHP
+			var xHRObject = false;
+			if (window.XMLHttpRequest) xHRObject = new XMLHttpRequest();
+			else if (window.ActiveXObject) xHRObject = new ActiveXObject("Microsoft.XMLHTTP");
+			
+			xHRObject.open("GET", "CustRegis.php?id=" +  Number(new Date) + "&fname=" + fname + "&lname=" + lname +
+				"&custpass=" + pass1 + "&emailadd=" + emailadd + "&custphone=" + custphone, true);
+			xHRObject.onreadystatechange = function() {
+				if (xHRObject.readyState == 4 && xHRObject.status == 200) {
+					//document.getElementById('ajaxresult').innerHTML = xHRObject.responseText;
+					AjaxResult = xHRObject.responseText;
+					if (AjaxResult != "Error") {
+						var user = fname + " " + lname;
+						setCookie ("username", user, 30);
+						document.getElementById('ajaxresult').innerHTML = xHRObject.responseText;
+					}
+				}
+			}
+			xHRObject.send(null);
+		}
+		//return result;    //if false the information will not be sent to the server
+	}
+
+	//function setCookie(cname, cvalue, exdays) 
+	//{
+	//	var d = new Date();
+	//	d.setTime(d.getTime() + (exdays*24*60*60*1000));
+	//	var expires = "expires="+d.toUTCString();
+	//	document.cookie = cname + "=" + cvalue + "; " + expires;
+	//}
+	
+</script>
+</head>
+<body id="home">
+
+<div id="header_wrapper">
+    <div id="header">
+	    <div id="site_title"></div>
+			<div id="Main_menu" class="smooth_menu">	
+				<ul>
+					<li><a href="buyonline.html">BuyOnline</a></li>
+					<li><a href="register.html">Registration</a></li>
+					<li><a href="login.html">Login</a></li> 
+					<li><a href="mlogin.html">Store-Login</a></li>
+				</ul>
+			<br style="clear: left" />
+        </div> 
+	</div> 
+</div>
+
+	
+<div id="main_layout">	
+    <div class="main_text float_1">
+		 <form id="regcust" name="regcust">
+			<fieldset id="registercust">
+				<legend>Customer Registration</legend>
+				<label for="fname">First Name:</label> <input type="text" id="fname" name="fname" maxlength="20" required="required"/>
+               	<div class="cleaner h10"></div>
+				<label for="lname">Last Name:</label> <input type="text" id="lname" name="lname" maxlength="20" required="required"/>
+               	<div class="cleaner h10"></div>
+				<label for="custpass">Password:</label> <input type="password" id="custpass" name="custpass" maxlength="10" required="required"/>
+				<div class="cleaner h10"></div>
+				<label for="confpass">Confirm Password:</label> <input type="password" id="confpass" name="confpass" maxlength="10" required="required"/>
+				<div class="cleaner h10"></div>
+				<label for="custemail">Email Address:</label> <input type="email" id="custemail" name="custemail" maxlength="30" required="required" />
+				<div class="cleaner h10"></div>
+				<label for="custphone">Contact Phone:</label> <input type="text" id="custphone" name="custphone" maxlength="15"/>
+				<div class="cleaner h10"></div>
+				<br />
+				<button onclick="validateCustomer()" class="submit_btn float_l">Submit</button>
+				
+			</fieldset>
+		</form>
+		<br />
+		<p id="ajaxresult">
+		</p>
+	</div>
+	
+</div>
+ 
+
+</body>
+</html>
